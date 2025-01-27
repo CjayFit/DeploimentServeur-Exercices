@@ -1,0 +1,39 @@
+# Hello world!
+# principal:
+#   myInt: 12345
+#   myFloat: 1.2345
+#   myString: hello
+#   myString2: "hello world"
+#   myBool: true
+#   myBool2: false
+#   myList:
+#    - pogo
+#    - fufu
+#    - etc...
+#   users:
+#   - cjay:
+#     biz: 10k/mo
+#     jobs:
+#     - Online Fitness Coach
+#     - Computer Scientist
+
+volumes:
+  ubuntu_data:
+
+services:
+  ubuntu-1:
+    image: ubuntu
+    command: tail -f /dev/null
+    ports:
+      - 8080:80
+      - 8081:80
+    environment:
+      - MY_USER:CJAY
+      - MY_PASSWORD:SLSS
+    volumes:
+      - ubuntu_data:/etc
+  ubuntu-2:
+    image: ubuntu:20.04
+    command: tail -f /dev/null
+    ports:
+      - 7777:1234
