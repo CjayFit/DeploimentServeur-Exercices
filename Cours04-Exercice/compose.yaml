@@ -1,0 +1,33 @@
+networks:
+  web-network:
+  db-network:
+
+services:
+  web:
+    image: nginx
+    ports:
+      - ${PORT_NGINX}:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - web-network
+
+  bd-mysql-root:
+    image: mysql
+    ports:
+      - ${PORT_MYSQL}:3306 
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MDP_MYSQL}
+    networks:
+      - db-network
+      
+  node:
+    image: node
+    command: tail -f /dev/null
+    ports:
+      - ${PORT_NODE}:3000
+    networks:
+      - web-network
+      - db-network     
